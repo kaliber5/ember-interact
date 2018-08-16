@@ -228,6 +228,8 @@ declare namespace interact {
     velocityY: number
     speed: number
     timeStamp: any
+    rect: Rect & Rect3
+    deltaRect: Rect & Rect3
     // drag
     dragEnter?: DOMElement
     dragLeave?: DOMElement
