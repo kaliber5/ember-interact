@@ -3,7 +3,7 @@ import template from 'ember-interact/templates/components/interact-element';
 import Component from '@ember/component';
 import { attribute, classNames, layout } from '@ember-decorators/component';
 import { computed } from '@ember-decorators/object';
-import interact, { DraggableOptions, ResizableOptions, InteractEvent } from 'interactjs';
+import interact, { DraggableOptions, ResizableOptions, InteractEvent, Interactable } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { htmlSafe } from "@ember/string";
 import { bind } from '@ember/runloop';
@@ -13,10 +13,11 @@ import { bind } from '@ember/runloop';
 export default class InteractElement extends Component {
   draggable: DraggableOptions | boolean = this.draggable || false;
   resizable: ResizableOptions | boolean = this.resizable || false;
+  interactable?: Interactable;
 
+  // @todo make these strictly one-way
   x: number = this.x || 0;
   y: number = this.y || 0;
-
   width: number = this.width || 100;
   height: number = this.height || 100;
 
@@ -58,7 +59,7 @@ export default class InteractElement extends Component {
   }
 
   setupInteractable() {
-    interact(this.element)
+    this.interactable = interact(this.element)
       .draggable(this.get('draggable'))
       .resizable(this.get('_resizable'))
       .on('dragmove', bind(this, this.onMove))
@@ -67,6 +68,12 @@ export default class InteractElement extends Component {
 
   didInsertElement() {
     this.setupInteractable();
+  }
+
+  willDestroyElement() {
+    if (this.interactable) {
+      this.interactable.unset();
+    }
   }
 
   onMove(e: InteractEvent) {
