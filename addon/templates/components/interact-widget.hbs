@@ -1,0 +1,24 @@
+{{#interact-element
+  draggable=_draggable
+  resizable=_resizable
+}}
+  <div class="interact__inner">
+    {{yield}}
+  </div>
+  {{#if hasHandles}}
+    <div class="interact__handles">
+      {{#if hasUpperLeftHandle}}
+        <div class="interact__handle interact__handle--ul"></div>
+      {{/if}}
+      {{#if hasUpperRightHandle}}
+        <div class="interact__handle interact__handle--ur"></div>
+      {{/if}}
+      {{#if hasLowerLeftHandle}}
+        <div class="interact__handle interact__handle--ll"></div>
+      {{/if}}
+      {{#if hasLowerRightHandle}}
+        <div class="interact__handle interact__handle--lr"></div>
+      {{/if}}
+    </div>
+  {{/if}}
+{{/interact-element}}

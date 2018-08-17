@@ -79,12 +79,12 @@ export default class InteractBase extends Component {
 
   @computed('draggable')
   get _draggable(): ResizableOptions | boolean {
-    return this.get('draggable');
+    return this.draggable;
   }
 
   @computed('resizable')
   get _resizable(): ResizableOptions | boolean {
-    let orig = this.get('resizable');
+    let orig = this.resizable;
     let defaults: ResizableOptions = {
       edges: { left: true, right: true, bottom: true, top: true }
     };
@@ -102,8 +102,8 @@ export default class InteractBase extends Component {
     let interactable: Interactable;
 
     interactable = interact(this.element)
-      .draggable(this.get('_draggable'))
-      .resizable(this.get('_resizable'));
+      .draggable(this._draggable)
+      .resizable(this._resizable);
 
     eventActionMap
       .forEach(([eventName, actionName]) => {

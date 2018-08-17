@@ -1,3 +1,31 @@
-.interact-element {
-    background: red;
+.interact {
+    background: gray;
+    position: relative;
+}
+
+.interact__handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: deepskyblue;
+}
+
+.interact__handle--ul {
+    top: -5px;
+    left: -5px;
+}
+
+.interact__handle--ur {
+    top: -5px;
+    right: -5px;
+}
+
+.interact__handle--ll {
+    bottom: -5px;
+    left: -5px;
+}
+
+.interact__handle--lr {
+    bottom: -5px;
+    right: -5px;
 }
