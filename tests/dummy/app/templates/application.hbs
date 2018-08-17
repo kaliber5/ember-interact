@@ -1,16 +1,19 @@
-<h1>sdf</h1>
+<h1>ember-interact</h1>
 
-{{#interact-widget
-  draggable=true
-  resizable=true
-}}
-  <img src="https://placeimg.com/640/480/arch" alt="" class="interact__image">
-{{/interact-widget}}
+<button {{action "reset"}}>Reset</button>
 
-{{#interact-widget
+{{#interact-element
+  x=x
+  y=y
+  width=width
+  height=height
   draggable=true
-  resizable=true
+  resizable=(hash
+    preserveAspectRatio=true
+  )
   resizeHandles="corner"
+  onChange=(action "update")
 }}
+  <div style="position: absolute">{{width}} x {{height}}</div>
   <img src="https://placeimg.com/640/480/nature" alt="" class="interact__image">
-{{/interact-widget}}
+{{/interact-element}}
