@@ -1,1 +1,10 @@
-{{yield}}
+{{#interact-base
+  class="interact-element"
+  style=style
+  draggable=draggable
+  resizable=resizable
+  onDragMove=(action "onMove")
+  onResizeMove=(action "onResize")
+}}
+  {{yield}}
+{{/interact-base}}
