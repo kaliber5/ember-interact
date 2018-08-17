@@ -40,6 +40,11 @@ export default class InteractWidget extends Component {
   @reads('hasCornerHandles') hasLowerLeftHandle?: boolean;
   @reads('hasCornerHandles') hasLowerRightHandle?: boolean;
 
+  @reads('hasCenterHandles') hasTopCenterHandle?: boolean;
+  @reads('hasCenterHandles') hasRightCenterHandle?: boolean;
+  @reads('hasCenterHandles') hasBottomCenterHandle?: boolean;
+  @reads('hasCenterHandles') hasLeftCenterHandle?: boolean;
+
   @computed('resizable')
   get _resizable(): ResizableOptions | false {
     let orig = this.get('resizable');
