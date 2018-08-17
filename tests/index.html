@@ -13,6 +13,20 @@
     <link rel="stylesheet" href="{{rootURL}}assets/vendor.css">
     <link rel="stylesheet" href="{{rootURL}}assets/dummy.css">
     <link rel="stylesheet" href="{{rootURL}}assets/test-support.css">
+    <style type="text/css">
+      #ember-testing-container {
+        margin: 0;
+        position: absolute !important;
+        top: 0;
+        left: 0;
+        border: none;
+        opacity: 0.5;
+      }
+
+      #ember-testing {
+        transform: none;
+      }
+    </style>
 
     {{content-for "head-footer"}}
     {{content-for "test-head-footer"}}
