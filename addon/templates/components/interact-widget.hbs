@@ -11,6 +11,7 @@ as |element|
   {{#element.base
     onClick=(action "select")
     class=(if selected "interact--selected")
+    restrictToElement=restrictToElement
   }}
     <div class="interact__inner">
       {{yield}}

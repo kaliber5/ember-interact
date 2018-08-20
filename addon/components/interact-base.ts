@@ -12,6 +12,7 @@ import interact, {
 } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
+import { DOMElement } from "../../types/interactjs";
 
 type ActionName =
   'onDragStart' |
@@ -74,21 +75,44 @@ export default class InteractBase extends Component {
   draggable: DraggableOptions | boolean = this.draggable || false;
   resizable: ResizableOptions | boolean = this.resizable || false;
   interactable?: Interactable;
+  restrictToElement?: DOMElement;
 
   @attribute
   style?: string;
 
   @computed('draggable')
-  get _draggable(): ResizableOptions | boolean {
-    return this.draggable;
+  get _draggable(): DraggableOptions | boolean {
+    let orig = this.draggable;
+    let defaults: DraggableOptions = {
+    };
+    if (this.restrictToElement) {
+      defaults.restrict = {
+        restriction: this.restrictToElement,
+        elementRect: { left: 0, right: 1, top: 0, bottom: 1 }
+      }
+    }
+
+    if (orig === false) {
+      return false;
+    }
+    if (orig === true) {
+      return defaults;
+    }
+    return assign({}, defaults, orig);
   }
 
-  @computed('resizable')
+  @computed('resizable', 'restrict')
   get _resizable(): ResizableOptions | boolean {
     let orig = this.resizable;
     let defaults: ResizableOptions = {
-      edges: { left: true, right: true, bottom: true, top: true }
+      edges: { left: true, right: true, bottom: true, top: true },
     };
+
+    if (this.restrictToElement) {
+      defaults.restrictEdges = {
+        outer: this.restrictToElement
+      };
+    }
 
     if (orig === false) {
       return false;

@@ -88,6 +88,11 @@ declare namespace interact {
     max?: Rect3
   }
 
+  interface RestrictEdgesOption {
+    outer?: RestrictOption['restriction']
+    inner?: RestrictOption['restriction']
+  }
+
   interface EdgeOptions {
     top?: boolean | CSSSelector | DOMElement
     left?: boolean | CSSSelector | DOMElement
@@ -120,6 +125,7 @@ declare namespace interact {
   interface ResizableOptions extends CommonOptions {
     snapSize?: SnapOptions
     restrictSize?: RestrictSizeOption
+    restrictEdges?: RestrictEdgesOption
     square?: boolean
     edges?: EdgeOptions
     // deprecated

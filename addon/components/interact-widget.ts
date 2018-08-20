@@ -91,10 +91,10 @@ export default class InteractWidget extends Component {
   };
 
   didInsertElement() {
-    document.body.addEventListener('click', this.deselect, true); // use capture phase
+    document.body.addEventListener('mousedown', this.deselect, true); // use capture phase
   }
 
   willDestroyElement() {
-    document.body.removeEventListener('click', this.deselect, true);
+    document.body.removeEventListener('mousedown', this.deselect, true);
   }
 };

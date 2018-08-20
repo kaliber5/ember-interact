@@ -2,24 +2,26 @@
 
 <button {{action "reset"}}>Reset</button>
 
+
 <div style="width:600px; height: 600px; border: dashed red">
-  {{#interact-widget
-    x=x
-    y=y
-    width=width
-    height=height
-    draggable=true
-    resizable=(hash
-      preserveAspectRatio=true
-    )
-    selectable=true
-    selected=selected
-    resizeHandles="corner"
-    onChange=(action "update")
-    onSelect=(action (mut selected) true)
-    onDeselect=(action (mut selected) false)
-  }}
-    <div style="position: absolute">{{width}} x {{height}}</div>
-    <img src="https://placeimg.com/640/480/nature" alt="" class="interact__image">
-  {{/interact-widget}}
+  {{#interact-canvas as |canvas|}}
+    {{#canvas.widget
+      x=x
+      y=y
+      width=width
+      height=height
+      draggable=true
+      resizable=(hash
+        preserveAspectRatio=true
+      )
+      selected=selected
+      resizeHandles="corner"
+      onChange=(action "update")
+      onSelect=(action (mut selected) true)
+      onDeselect=(action (mut selected) false)
+    }}
+      <div style="position: absolute">{{width}} x {{height}}</div>
+      <img src="https://placeimg.com/640/480/nature" alt="" class="interact__image">
+    {{/canvas.widget}}
+  {{/interact-canvas}}
 </div>
