@@ -4,8 +4,9 @@ import template from '../templates/components/interact-widget';
 import { layout, tagName } from '@ember-decorators/component';
 import { computed } from '@ember-decorators/object';
 import { DraggableOptions, ResizableOptions } from 'interactjs';
-import { assign } from "@ember/polyfills";
-import { or, readOnly, reads } from "@ember-decorators/object/computed";
+import { assign } from '@ember/polyfills';
+import { or, readOnly, reads } from '@ember-decorators/object/computed';
+import { UpdateParams} from './interact-element';
 
 @tagName('')
 @layout(template)
@@ -14,6 +15,9 @@ export default class InteractWidget extends Component {
   resizable: ResizableOptions | boolean = this.resizable || false;
 
   resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles || true;
+
+  onChange(_params: UpdateParams) {
+  }
 
   @computed('resizeHandles', 'isResizable')
   get hasCenterHandles() {

@@ -6,7 +6,7 @@ import { action, computed } from '@ember-decorators/object';
 import { DraggableOptions, ResizableOptions, InteractEvent } from 'interactjs';
 import { htmlSafe } from "@ember/string";
 
-interface UpdateParams {
+export interface UpdateParams {
   x: number;
   y: number;
   width: number;
