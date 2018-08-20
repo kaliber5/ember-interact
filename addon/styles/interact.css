@@ -6,13 +6,13 @@
 
 .interact {
     position: absolute;
-    /*border: solid 1px transparent;*/
-    /*margin: -1px;*/
 }
 
 .interact__inner {
     width: 100%;
     height: 100%;
+    border: solid 1px transparent;
+    margin: -1px;
 }
 
 .interact__handle {
@@ -71,6 +71,6 @@
     height: 100%;
 }
 
-.interact--selected {
-    /*border: solid 1px deepskyblue;*/
+.interact--selected .interact__inner {
+    border: solid 1px deepskyblue;
 }

@@ -5,7 +5,7 @@ import { layout, tagName } from '@ember-decorators/component';
 import { action, computed } from '@ember-decorators/object';
 import { DraggableOptions, ResizableOptions } from 'interactjs';
 import { assign } from '@ember/polyfills';
-import { or, readOnly, reads } from '@ember-decorators/object/computed';
+import { readOnly, reads } from '@ember-decorators/object/computed';
 import { UpdateParams } from './interact-element';
 
 @tagName('')
@@ -39,7 +39,10 @@ export default class InteractWidget extends Component {
     return this.isResizable && (handles === true || handles === 'corner');
   }
 
-  @or('hasCenterHandles', 'hasCornerHandles') hasHandles?: boolean;
+  @computed('selectable', 'selected')
+  get showHandles(): boolean {
+    return !this.selectable || this.selected;
+  }
 
   @computed('_resizable')
   get isResizable() {

@@ -1,8 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, click, settled } from '@ember/test-helpers';
+import { find, render, click } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { run } from '@ember/runloop';
 import { setupSinonSandbox } from 'ember-sinon-sandbox/test-support';
 
 module('Integration | Component | interact-widget', function(hooks) {
@@ -37,23 +36,19 @@ module('Integration | Component | interact-widget', function(hooks) {
     assert.dom('.interact__handle--center').exists({ count: 4 });
     assert.dom('.interact__handle--corner').exists({ count: 4 });
 
-    run(() => this.set('resizeHandles', false));
-    await settled();
+    this.set('resizeHandles', false);
     assert.dom('.interact__handle').doesNotExist();
 
-    run(() => this.set('resizeHandles', true));
-    await settled();
+    this.set('resizeHandles', true);
     assert.dom('.interact__handle').exists({ count: 8 });
     assert.dom('.interact__handle--center').exists({ count: 4 });
     assert.dom('.interact__handle--corner').exists({ count: 4 });
 
-    run(() => this.set('resizeHandles', 'corner'));
-    await settled();
+    this.set('resizeHandles', 'corner');
     assert.dom('.interact__handle').exists({ count: 4 });
     assert.dom('.interact__handle--corner').exists({ count: 4 });
 
-    run(() => this.set('resizeHandles', 'center'));
-    await settled();
+    this.set('resizeHandles', 'center');
     assert.dom('.interact__handle').exists({ count: 4 });
     assert.dom('.interact__handle--center').exists({ count: 4 });
   });
@@ -63,11 +58,11 @@ module('Integration | Component | interact-widget', function(hooks) {
     await render(hbs`{{interact-widget selectable=true selected=selected}}`);
 
     assert.dom('.interact').hasNoClass('interact--selected');
-    run(() => this.set('selected', true));
+    this.set('selected', true);
     assert.dom('.interact').hasClass('interact--selected');
   });
 
-  test('it calls onSelected and onDeselcted', async function(assert) {
+  test('it calls onSelect and onDeselect', async function(assert) {
     let select = this.sandbox.spy();
     this.set('select', select);
     let deselect = this.sandbox.spy();
@@ -79,5 +74,18 @@ module('Integration | Component | interact-widget', function(hooks) {
 
     await click(document.body);
     assert.ok(deselect.calledOnce, 'onDeselect action has been called.');
+  });
+
+  test('it hides handles when deselected ', async function(assert) {
+    this.set('selected', false);
+    await render(hbs`{{interact-widget resizable=true selectable=true selected=selected}}`);
+
+    assert.dom('.interact__handle').doesNotExist();
+
+    this.set('selected', true);
+    assert.dom('.interact__handle').exists({ count: 8 });
+
+    this.set('selected', false);
+    assert.dom('.interact__handle').doesNotExist();
   });
 });
