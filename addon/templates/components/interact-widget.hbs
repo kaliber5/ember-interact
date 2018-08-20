@@ -9,7 +9,7 @@
 as |element|
 }}
   {{#element.base
-    onClick=(action "select")
+    onDown=(action "select")
     class=(if selected "interact--selected")
     restrictToElement=restrictToElement
   }}

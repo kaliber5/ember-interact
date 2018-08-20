@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, click } from '@ember/test-helpers';
+import { find, render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupSinonSandbox } from 'ember-sinon-sandbox/test-support';
 
@@ -69,10 +69,10 @@ module('Integration | Component | interact-widget', function(hooks) {
     this.set('deselect', deselect);
     await render(hbs`{{interact-widget selectable=true onSelect=select onDeselect=deselect}}`);
 
-    await click('.interact');
+    await triggerEvent('.interact', 'pointerdown');
     assert.ok(select.calledOnce, 'onSelect action has been called.');
 
-    await click(document.body);
+    await triggerEvent(document.body, 'pointerdown');
     assert.ok(deselect.calledOnce, 'onDeselect action has been called.');
   });
 
