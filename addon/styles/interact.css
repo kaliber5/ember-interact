@@ -1,6 +1,7 @@
 .interact {
-    background: gray;
     position: absolute;
+    border: solid 1px transparent;
+    /*margin: -1px;*/
 }
 
 .interact__inner {
@@ -62,4 +63,16 @@
 .interact__image {
     width: 100%;
     height: 100%;
+}
+
+.interact--selected {
+    border: solid 1px deepskyblue;
+}
+
+.interact .interact__handle {
+    display: none;
+}
+
+.interact--selected .interact__handle {
+    display: block;
 }

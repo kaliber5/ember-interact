@@ -2,21 +2,29 @@ import Component from '@ember/component';
 // @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/interact-widget';
 import { layout, tagName } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
+import { action, computed } from '@ember-decorators/object';
 import { DraggableOptions, ResizableOptions } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { or, readOnly, reads } from '@ember-decorators/object/computed';
-import { UpdateParams} from './interact-element';
+import { UpdateParams } from './interact-element';
 
 @tagName('')
 @layout(template)
 export default class InteractWidget extends Component {
   draggable: DraggableOptions | boolean = this.draggable || false;
   resizable: ResizableOptions | boolean = this.resizable || false;
+  selectable: boolean = this.selectable || false;
+  selected: boolean = this.selected || false;
 
-  resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles || true;
+  resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles !== undefined ? this.resizeHandles : true;
 
   onChange(_params: UpdateParams) {
+  }
+
+  onSelect() {
+  }
+
+  onDeselect() {
   }
 
   @computed('resizeHandles', 'isResizable')
@@ -66,4 +74,27 @@ export default class InteractWidget extends Component {
   }
 
   @readOnly('draggable') _draggable?: DraggableOptions;
+
+  @action
+  select() {
+    if (this.selectable) {
+      this.onSelect();
+    }
+  }
+
+  // make this an class field, so this is bound to the instance
+  deselect = (event: MouseEvent) => {
+    if (this.selectable && !(event.target instanceof HTMLElement &&
+      event.target.matches('.interact, .interact *'))) {
+      this.onDeselect();
+    }
+  };
+
+  didInsertElement() {
+    document.body.addEventListener('click', this.deselect, true); // use capture phase
+  }
+
+  willDestroyElement() {
+    document.body.removeEventListener('click', this.deselect, true);
+  }
 };

@@ -5,6 +5,7 @@ export default Controller.extend({
   y: 100,
   width: 300,
   height: 200,
+  selected: false,
 
   actions: {
     reset() {

@@ -6,36 +6,41 @@
   width=width
   height=height
   onChange=onChange
+as |element|
 }}
-  <div class="interact__inner">
-    {{yield}}
-  </div>
-  {{#if hasHandles}}
-    {{#if hasUpperLeftHandle}}
-      <div class="interact__handle interact__handle--ul"></div>
-    {{/if}}
-    {{#if hasUpperRightHandle}}
-      <div class="interact__handle interact__handle--ur"></div>
-    {{/if}}
-    {{#if hasLowerLeftHandle}}
-      <div class="interact__handle interact__handle--ll"></div>
-    {{/if}}
-    {{#if hasLowerRightHandle}}
-      <div class="interact__handle interact__handle--lr"></div>
-    {{/if}}
+  {{#element.base
+    onClick=(action "select")
+    class=(if selected "interact--selected")
+  }}
+    <div class="interact__inner">
+      {{yield}}
+    </div>
+    {{#if hasHandles}}
+      {{#if hasUpperLeftHandle}}
+        <div class="interact__handle interact__handle--corner interact__handle--ul"></div>
+      {{/if}}
+      {{#if hasUpperRightHandle}}
+        <div class="interact__handle interact__handle--corner interact__handle--ur"></div>
+      {{/if}}
+      {{#if hasLowerLeftHandle}}
+        <div class="interact__handle interact__handle--corner interact__handle--ll"></div>
+      {{/if}}
+      {{#if hasLowerRightHandle}}
+        <div class="interact__handle interact__handle--corner interact__handle--lr"></div>
+      {{/if}}
 
-    {{#if hasTopCenterHandle}}
-      <div class="interact__handle interact__handle--tc"></div>
+      {{#if hasTopCenterHandle}}
+        <div class="interact__handle interact__handle--center interact__handle--tc"></div>
+      {{/if}}
+      {{#if hasRightCenterHandle}}
+        <div class="interact__handle interact__handle--center interact__handle--rc"></div>
+      {{/if}}
+      {{#if hasBottomCenterHandle}}
+        <div class="interact__handle interact__handle--center interact__handle--bc"></div>
+      {{/if}}
+      {{#if hasLeftCenterHandle}}
+        <div class="interact__handle interact__handle--center interact__handle--lc"></div>
+      {{/if}}
     {{/if}}
-    {{#if hasRightCenterHandle}}
-      <div class="interact__handle interact__handle--rc"></div>
-    {{/if}}
-    {{#if hasBottomCenterHandle}}
-      <div class="interact__handle interact__handle--bc"></div>
-    {{/if}}
-    {{#if hasLeftCenterHandle}}
-      <div class="interact__handle interact__handle--lc"></div>
-    {{/if}}
-
-  {{/if}}
+  {{/element.base}}
 {{/interact-element}}

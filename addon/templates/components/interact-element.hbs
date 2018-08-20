@@ -1,10 +1,21 @@
-{{#interact-base
-  class="interact"
-  style=style
-  draggable=draggable
-  resizable=resizable
-  onDragMove=(action "onMove")
-  onResizeMove=(action "onResize")
-}}
-  {{yield}}
-{{/interact-base}}
+{{#let
+  (component
+    "interact-base"
+    style=style
+    draggable=draggable
+    resizable=resizable
+    onDragMove=(action "onMove")
+    onResizeMove=(action "onResize")
+  ) as |base|}}
+  {{#if (has-block-params)}}
+    {{yield
+      (hash
+        base=base
+      )
+    }}
+  {{else}}
+    {{#component base}}
+      {{yield}}
+    {{/component}}
+  {{/if}}
+{{/let}}

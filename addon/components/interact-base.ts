@@ -1,7 +1,7 @@
 // @ts-ignore: Ignore import of compiled template
 import template from 'ember-interact/templates/components/interact-base';
 import Component from '@ember/component';
-import { attribute, layout } from '@ember-decorators/component';
+import { attribute, classNames, layout } from '@ember-decorators/component';
 import { computed } from '@ember-decorators/object';
 import interact, {
   DraggableOptions,
@@ -69,6 +69,7 @@ const eventActionMap: [OnEventName, ActionName][] = [
 ];
 
 @layout(template)
+@classNames('interact')
 export default class InteractBase extends Component {
   draggable: DraggableOptions | boolean = this.draggable || false;
   resizable: ResizableOptions | boolean = this.resizable || false;
@@ -140,6 +141,12 @@ export default class InteractBase extends Component {
   onTap?: Listener;
   onDoubleTap?: Listener;
   onHold?: Listener;
+
+  onClick(_e: MouseEvent) {}
+
+  click(e: MouseEvent) {
+    this.onClick(e);
+  }
 
   didInsertElement() {
     this.setupInteractable();
