@@ -1,6 +1,11 @@
 <h1>ember-interact</h1>
 
-<button {{action "reset"}}>Reset</button>
+<code>
+  {{x}} : {{y}} / {{width}} x {{height}}
+</code>
+<p>
+  <button {{action "reset"}}>Reset</button>
+</p>
 
 
 <div style="width:600px; height: 600px; border: dashed red">
@@ -21,7 +26,6 @@
       onSelect=(action (mut selected) true)
       onDeselect=(action (mut selected) false)
     }}
-      <div style="position: absolute">{{width}} x {{height}}</div>
       <img src="https://placeimg.com/640/480/nature" alt="" class="interact__image">
     {{/canvas.widget}}
   {{/interact-canvas}}

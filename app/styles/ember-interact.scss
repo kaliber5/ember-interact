@@ -1,0 +1,83 @@
+$interact-handle-color: deepskyblue !default;
+$interact-handle-size: 11px !default;;
+$interact-border-color: $interact-handle-color !default;;
+$interact-border-thickness: 1px !default;
+$interact-border-style: dashed !default;
+$interact-handle-offset: $interact-handle-size/2;
+
+.interact-canvas {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.interact {
+  position: absolute;
+}
+
+.interact__inner {
+  width: 100%;
+  height: 100%;
+  border: solid $interact-border-thickness transparent;
+  margin: -$interact-border-thickness;
+}
+
+.interact__handle {
+  position: absolute;
+  width: $interact-handle-size;
+  height: $interact-handle-size;
+  background-color: $interact-handle-color;
+}
+
+.interact__handle--ul {
+  top: -$interact-handle-offset;
+  left: -$interact-handle-offset;
+}
+
+.interact__handle--ur {
+  top: -$interact-handle-offset;
+  right: -$interact-handle-offset;
+}
+
+.interact__handle--ll {
+  bottom: -$interact-handle-offset;
+  left: -$interact-handle-offset;
+}
+
+.interact__handle--lr {
+  bottom: -$interact-handle-offset;
+  right: -$interact-handle-offset;
+}
+
+.interact__handle--tc {
+  top: -$interact-handle-offset;
+  left: 50%;
+  margin-left: -$interact-handle-offset;
+}
+
+.interact__handle--rc {
+  right: -$interact-handle-offset;
+  top: 50%;
+  margin-top: -$interact-handle-offset;
+}
+
+.interact__handle--bc {
+  bottom: -$interact-handle-offset;
+  left: 50%;
+  margin-left: -$interact-handle-offset;
+}
+
+.interact__handle--lc {
+  left: -$interact-handle-offset;
+  top: 50%;
+  margin-top: -$interact-handle-offset;
+}
+
+.interact__image {
+  width: 100%;
+  height: 100%;
+}
+
+.interact--selected .interact__inner {
+  border: $interact-border-style $interact-border-thickness $interact-border-color;
+}
