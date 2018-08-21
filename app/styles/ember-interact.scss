@@ -1,9 +1,13 @@
-$interact-handle-color: deepskyblue !default;
-$interact-handle-size: 11px !default;;
-$interact-border-color: $interact-handle-color !default;;
+$interact-border-color: deepskyblue !default;
 $interact-border-thickness: 1px !default;
-$interact-border-style: dashed !default;
-$interact-handle-offset: $interact-handle-size/2;
+$interact-border-style: solid !default;
+
+$interact-handle-color: white !default;
+$interact-handle-border-color: $interact-border-color !default;
+$interact-handle-border-thickness: $interact-border-thickness !default;
+$interact-handle-border-style: solid !default;
+$interact-handle-size: 9px !default;
+$interact-handle-offset: $interact-handle-size/2 + $interact-handle-border-thickness !default;
 
 .interact-canvas {
   width: 100%;
@@ -27,6 +31,7 @@ $interact-handle-offset: $interact-handle-size/2;
   width: $interact-handle-size;
   height: $interact-handle-size;
   background-color: $interact-handle-color;
+  border: $interact-handle-border-style $interact-handle-border-thickness $interact-handle-border-color;
 }
 
 .interact__handle--ul {
