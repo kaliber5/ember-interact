@@ -1,6 +1,6 @@
 {
-  "name": "ember-interact",
-  "version": "0.0.0",
+  "name": "@kaliber5/ember-interact",
+  "version": "0.0.1",
   "description": "The default blueprint for ember-cli addons.",
   "keywords": [
     "ember-addon"
@@ -73,5 +73,8 @@
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
+  },
+  "publishConfig": {
+    "registry": "https://npm.kaliber5.de"
   }
 }
