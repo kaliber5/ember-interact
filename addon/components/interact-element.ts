@@ -30,6 +30,8 @@ export default class InteractElement extends Component {
     return this.x || 0;
   }
   set _x(_value) {
+    // @ts-ignore
+    return _value;
   }
 
   @computed('y')
@@ -37,6 +39,8 @@ export default class InteractElement extends Component {
     return this.y || 0;
   }
   set _y(_value) {
+    // @ts-ignore
+    return _value;
   }
 
   @computed('width')
@@ -44,6 +48,8 @@ export default class InteractElement extends Component {
     return this.width || 100;
   }
   set _width(_value) {
+    // @ts-ignore
+    return _value;
   }
 
   @computed('height')
@@ -51,6 +57,8 @@ export default class InteractElement extends Component {
     return this.height || 100;
   }
   set _height(_value) {
+    // @ts-ignore
+    return _value;
   }
 
   @computed('_x', '_y', '_width', '_height')
@@ -59,6 +67,9 @@ export default class InteractElement extends Component {
   }
 
   onChange(_params: UpdateParams) {
+  }
+
+  onChangeEnd(_params: UpdateParams) {
   }
 
   update(params: UpdateParams) {
@@ -89,6 +100,16 @@ export default class InteractElement extends Component {
       y: this._y + event.deltaRect.top,
       width: event.rect.width,
       height: event.rect.height
+    });
+  }
+
+  @action
+  onInteractEnd() {
+    this.onChangeEnd({
+      x: this._x,
+      y: this._y,
+      width: this._width,
+      height: this._height
     });
   }
 };

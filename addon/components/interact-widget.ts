@@ -21,6 +21,9 @@ export default class InteractWidget extends Component {
   onChange(_params: UpdateParams) {
   }
 
+  onChangeEnd(_params: UpdateParams) {
+  }
+
   onSelect() {
   }
 
