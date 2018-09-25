@@ -7,6 +7,7 @@ import { DraggableOptions, ResizableOptions } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { readOnly, reads } from '@ember-decorators/object/computed';
 import { UpdateParams } from './interact-element';
+import { next } from '@ember/runloop';
 
 @tagName('')
 @layout(template)
@@ -92,7 +93,7 @@ export default class InteractWidget extends Component {
   deselect = (event: MouseEvent) => {
     if (this.selectable && !(event.target instanceof HTMLElement &&
       event.target.matches('.interact, .interact *'))) {
-      this.onDeselect();
+      next(this, this.onDeselect);
     }
   };
 
