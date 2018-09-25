@@ -17,6 +17,7 @@ $interact-handle-offset: $interact-handle-size/2 + $interact-handle-border-thick
 
 .interact {
   position: absolute;
+  box-sizing: content-box;
 }
 
 .interact__inner {
