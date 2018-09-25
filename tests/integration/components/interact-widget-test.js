@@ -72,7 +72,7 @@ module('Integration | Component | interact-widget', function(hooks) {
     await triggerEvent('.interact', 'pointerdown');
     assert.ok(select.calledOnce, 'onSelect action has been called.');
 
-    await triggerEvent(document.body, 'pointerdown');
+    await triggerEvent(document.body, 'click');
     assert.ok(deselect.calledOnce, 'onDeselect action has been called.');
   });
 
