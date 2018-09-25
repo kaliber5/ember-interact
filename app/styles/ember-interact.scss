@@ -6,6 +6,7 @@ $interact-handle-color: white !default;
 $interact-handle-border-color: $interact-border-color !default;
 $interact-handle-border-thickness: $interact-border-thickness !default;
 $interact-handle-border-style: solid !default;
+$interact-handle-border-radius: 0 !default;
 $interact-handle-size: 9px !default;
 $interact-handle-offset: $interact-handle-size/2 + $interact-handle-border-thickness !default;
 
@@ -21,6 +22,7 @@ $interact-handle-offset: $interact-handle-size/2 + $interact-handle-border-thick
 }
 
 .interact__inner {
+  box-sizing: content-box;
   width: 100%;
   height: 100%;
   border: solid $interact-border-thickness transparent;
@@ -29,10 +31,12 @@ $interact-handle-offset: $interact-handle-size/2 + $interact-handle-border-thick
 
 .interact__handle {
   position: absolute;
+  box-sizing: content-box;
   width: $interact-handle-size;
   height: $interact-handle-size;
   background-color: $interact-handle-color;
   border: $interact-handle-border-style $interact-handle-border-thickness $interact-handle-border-color;
+  border-radius: $interact-handle-border-radius;
 }
 
 .interact__handle--ul {
