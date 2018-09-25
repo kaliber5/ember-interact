@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-interact',
+  name: '@kaliber5/ember-interact',
   included(app) {
     this._super.included.apply(this, arguments);
 
