@@ -1,1 +1,1 @@
-export { default } from 'ember-interact/components/interact-element';
+export { default } from '@kaliber5/ember-interact/components/interact-element';

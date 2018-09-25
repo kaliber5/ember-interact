@@ -1,5 +1,5 @@
 // @ts-ignore: Ignore import of compiled template
-import template from 'ember-interact/templates/components/interact-base';
+import template from '../templates/components/interact-base';
 import Component from '@ember/component';
 import { attribute, classNames, layout } from '@ember-decorators/component';
 import { computed } from '@ember-decorators/object';

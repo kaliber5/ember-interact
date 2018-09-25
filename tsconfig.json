@@ -27,16 +27,16 @@
         "tests/dummy/app/*",
         "app/*"
       ],
-      "ember-interact": [
+      "@kaliber5/ember-interact": [
         "addon"
       ],
-      "ember-interact/*": [
+      "@kaliber5/ember-interact/*": [
         "addon/*"
       ],
-      "ember-interact/test-support": [
+      "@kaliber5/ember-interact/test-support": [
         "addon-test-support"
       ],
-      "ember-interact/test-support/*": [
+      "@kaliber5/ember-interact/test-support/*": [
         "addon-test-support/*"
       ],
       "*": [
