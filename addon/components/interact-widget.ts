@@ -68,7 +68,8 @@ export default class InteractWidget extends Component {
   get _resizable(): ResizableOptions | false {
     let orig = this.get('resizable');
     let defaults: ResizableOptions = {
-      allowFrom: '.interact__handle'
+      allowFrom: '.interact__handle',
+      margin: 1
     };
 
     if (orig === false) {

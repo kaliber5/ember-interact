@@ -133,7 +133,8 @@ declare namespace interact {
     //
     invert?: 'none' | 'negate' | 'reposition'
     squareResize?: boolean
-    oninertiastart?: Listener
+    oninertiastart?: Listener,
+    margin?: number
   }
 
   interface GesturableOptions extends CommonOptions {
