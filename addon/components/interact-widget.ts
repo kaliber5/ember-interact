@@ -93,18 +93,17 @@ export default class InteractWidget extends Component {
   // make this an class field, so this is bound to the instance
   deselect = (event: MouseEvent) => {
     if (this.selectable && !(event.target instanceof HTMLElement &&
-      event.target.matches('.interact, .interact *'))) {
-      if (!this.isDestroyed && !this.isDestroying) {
-        next(this, this.onDeselect);
-      }
+      event.target.matches('.interact, .interact *') &&
+      !this.isDestroyed && !this.isDestroying)) {
+      next(this, this.onDeselect);
     }
   };
 
   didInsertElement() {
-    document.body.addEventListener('click', this.deselect, true); // use capture phase
+    document.body.addEventListener('mousedown', this.deselect, true); // use capture phase
   }
 
   willDestroyElement() {
-    document.body.removeEventListener('click', this.deselect, true);
+    document.body.removeEventListener('mousedown', this.deselect, true);
   }
 };

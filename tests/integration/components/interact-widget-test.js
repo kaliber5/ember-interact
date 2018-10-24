@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { find, render, triggerEvent } from '@ember/test-helpers';
+import { click, find, render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupSinonSandbox } from 'ember-sinon-sandbox/test-support';
 
@@ -72,7 +72,7 @@ module('Integration | Component | interact-widget', function(hooks) {
     await triggerEvent('.interact', 'pointerdown');
     assert.ok(select.calledOnce, 'onSelect action has been called.');
 
-    await triggerEvent(document.body, 'click');
+    await click(document.body);
     assert.ok(deselect.calledOnce, 'onDeselect action has been called.');
   });
 
