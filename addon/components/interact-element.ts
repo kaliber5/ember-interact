@@ -104,7 +104,7 @@ export default class InteractElement extends Component {
   }
 
   @action
-  onInteractEnd() {
+  onInteractEnd(_e: InteractEvent) {
     this.onChangeEnd({
       x: this._x,
       y: this._y,

@@ -19,7 +19,14 @@ export default Controller.extend({
 
     update(params) {
       this.setProperties(params);
+    },
+
+    noop(e) {
+      if (e) {
+        e.stopPropagation();
+      }
     }
+
   }
 
 })
