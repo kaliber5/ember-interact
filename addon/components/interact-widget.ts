@@ -17,7 +17,7 @@ export default class InteractWidget extends Component {
   selectable: boolean = false;
   selected: boolean = false;
 
-  resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles !== undefined ? this.resizeHandles : true;
+  resizeHandles?: boolean | 'center' | 'corner' = true;
 
   onChange(_params: UpdateParams) {
   }
