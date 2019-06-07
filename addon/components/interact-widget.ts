@@ -2,20 +2,20 @@ import Component from '@ember/component';
 // @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/interact-widget';
 import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember-decorators/object';
+import { action, computed } from '@ember/object';
 import { DraggableOptions, ResizableOptions } from 'interactjs';
 import { assign } from '@ember/polyfills';
-import { readOnly, reads } from '@ember-decorators/object/computed';
+import { readOnly, reads } from '@ember/object/computed';
 import { UpdateParams } from './interact-element';
 import { next } from '@ember/runloop';
 
 @tagName('')
 @layout(template)
 export default class InteractWidget extends Component {
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
-  selectable: boolean = this.selectable || false;
-  selected: boolean = this.selected || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
+  selectable: boolean = false;
+  selected: boolean = false;
 
   resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles !== undefined ? this.resizeHandles : true;
 

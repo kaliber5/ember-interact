@@ -2,8 +2,9 @@
 import template from '../templates/components/interact-base';
 import Component from '@ember/component';
 import { attribute, classNames, layout } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
+import { computed } from '@ember/object';
 import interact, {
+  DOMElement,
   DraggableOptions,
   ResizableOptions,
   Interactable,
@@ -12,7 +13,6 @@ import interact, {
 } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
-import { DOMElement } from "../../types/interactjs";
 
 type ActionName =
   'onDragStart' |
@@ -72,8 +72,8 @@ const eventActionMap: [OnEventName, ActionName][] = [
 @layout(template)
 @classNames('interact')
 export default class InteractBase extends Component {
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
   interactable?: Interactable;
   restrictToElement?: DOMElement;
 

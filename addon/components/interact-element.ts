@@ -2,9 +2,8 @@
 import template from '../templates/components/interact-element';
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember-decorators/object';
-import { DraggableOptions, ResizableOptions, InteractEvent } from 'interactjs';
-import { htmlSafe } from "@ember/string";
+import { action, computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
 
 export interface UpdateParams {
   x: number;
@@ -17,8 +16,8 @@ export interface UpdateParams {
 @layout(template)
 export default class InteractElement extends Component {
 
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
 
   x?: number;
   y?: number;
