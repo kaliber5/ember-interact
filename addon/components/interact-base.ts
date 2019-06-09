@@ -41,32 +41,32 @@ type ActionName =
   'onHold';
 
 const eventActionMap: [OnEventName, ActionName][] = [
-    ['dragstart', 'onDragStart'],
-    ['dragmove', 'onDragMove'],
-    ['draginertiastart', 'onDragInertiaStart'],
-    ['dragend', 'onDragEnd'],
-    ['resizestart', 'onResizeStart'],
-    ['resizemove', 'onResizeMove'],
-    ['resizeinertiastart', 'onResizeInertiaStart'],
-    ['resizeend', 'onResizeEnd'],
-    ['gesturestart', 'onGestureStart'],
-    ['gesturemove', 'onGestureMove'],
-    ['gestureend', 'onGestureEnd'],
-    // drop
-    ['dropactivate', 'onDropActivate'],
-    ['dropdeactivate', 'onDropDeactivate'],
-    ['dragenter', 'onDragEnter'],
-    ['dragleave', 'onDragLeave'],
-    ['dropmove', 'onDropMove'],
-    ['drop', 'onDrop'],
-    // pointer events
-    ['down', 'onDown'],
-    ['move', 'onMove'],
-    ['up', 'onUp'],
-    ['cancel', 'onCancel'],
-    ['tap', 'onTap'],
-    ['doubletap', 'onDoubleTap'],
-    ['hold', 'onHold']
+  ['dragstart', 'onDragStart'],
+  ['dragmove', 'onDragMove'],
+  ['draginertiastart', 'onDragInertiaStart'],
+  ['dragend', 'onDragEnd'],
+  ['resizestart', 'onResizeStart'],
+  ['resizemove', 'onResizeMove'],
+  ['resizeinertiastart', 'onResizeInertiaStart'],
+  ['resizeend', 'onResizeEnd'],
+  ['gesturestart', 'onGestureStart'],
+  ['gesturemove', 'onGestureMove'],
+  ['gestureend', 'onGestureEnd'],
+  // drop
+  ['dropactivate', 'onDropActivate'],
+  ['dropdeactivate', 'onDropDeactivate'],
+  ['dragenter', 'onDragEnter'],
+  ['dragleave', 'onDragLeave'],
+  ['dropmove', 'onDropMove'],
+  ['drop', 'onDrop'],
+  // pointer events
+  ['down', 'onDown'],
+  ['move', 'onMove'],
+  ['up', 'onUp'],
+  ['cancel', 'onCancel'],
+  ['tap', 'onTap'],
+  ['doubletap', 'onDoubleTap'],
+  ['hold', 'onHold']
 ];
 
 @layout(template)
@@ -82,8 +82,8 @@ export default class InteractBase extends Component {
 
   @computed('draggable')
   get _draggable(): DraggableOptions | boolean {
-    let orig = this.draggable;
-    let defaults: DraggableOptions = {
+    const orig = this.draggable;
+    const defaults: DraggableOptions = {
     };
     if (this.restrictToElement) {
       defaults.restrict = {
@@ -103,8 +103,8 @@ export default class InteractBase extends Component {
 
   @computed('resizable', 'restrict')
   get _resizable(): ResizableOptions | boolean {
-    let orig = this.resizable;
-    let defaults: ResizableOptions = {
+    const orig = this.resizable;
+    const defaults: ResizableOptions = {
       edges: { left: true, right: true, bottom: true, top: true },
     };
 
@@ -124,15 +124,13 @@ export default class InteractBase extends Component {
   }
 
   setupInteractable() {
-    let interactable: Interactable;
-
-    interactable = interact(this.element)
+    const interactable: Interactable = interact(this.element)
       .draggable(this._draggable)
       .resizable(this._resizable);
 
     eventActionMap
       .forEach(([eventName, actionName]) => {
-        let fn = this[actionName];
+        const fn = this[actionName];
         if (typeof fn === 'function') {
           interactable.on(eventName, bind(this, fn))
         }
@@ -181,4 +179,4 @@ export default class InteractBase extends Component {
       this.interactable.unset();
     }
   }
-};
+}

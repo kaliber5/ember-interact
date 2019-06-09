@@ -1,6 +1,6 @@
 module.exports = {
   root: true,
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
@@ -10,12 +10,17 @@ module.exports = {
   ],
   extends: [
     'eslint:recommended',
-    'plugin:ember/recommended'
+    'plugin:@typescript-eslint/eslint-recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:ember/recommended',
   ],
   env: {
     browser: true
   },
   rules: {
+    '@typescript-eslint/indent': ['error', 2],
+    '@typescript-eslint/explicit-member-accessibility': 'off',
+    '@typescript-eslint/camelcase': 'off',
     'ember/no-jquery': 2
   },
   overrides: [
@@ -48,6 +53,7 @@ module.exports = {
       plugins: ['node'],
       rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
         // add your custom rules and overrides for node files here
+        '@typescript-eslint/no-var-requires': 'off'
       })
     }
   ]
