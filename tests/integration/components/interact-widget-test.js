@@ -2,11 +2,11 @@ import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { click, find, render, triggerEvent } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
-import { setupSinonSandbox } from 'ember-sinon-sandbox/test-support';
+import { setupSinonSinoff } from 'ember-sinon-sinoff/test-support';
 
 module('Integration | Component | interact-widget', function(hooks) {
   setupRenderingTest(hooks);
-  setupSinonSandbox(hooks);
+  setupSinonSinoff(hooks);
 
   test('it renders as a block', async function(assert) {
     await render(hbs`
