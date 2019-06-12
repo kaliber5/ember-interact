@@ -7,4 +7,5 @@ pipelines:
           - node
         script:
           - yarn
+          - yarn lint
           - yarn test
