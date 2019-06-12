@@ -2,9 +2,9 @@
 import template from '../templates/components/interact-element';
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember-decorators/object';
-import { DraggableOptions, ResizableOptions, InteractEvent } from 'interactjs';
-import { htmlSafe } from "@ember/string";
+import { action, computed } from '@ember/object';
+import { htmlSafe } from '@ember/string';
+import { DraggableOptions, ResizableOptions, ResizeEvent, InteractEvent } from '@interactjs/types/types';
 
 export interface UpdateParams {
   x: number;
@@ -17,8 +17,8 @@ export interface UpdateParams {
 @layout(template)
 export default class InteractElement extends Component {
 
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
 
   x?: number;
   y?: number;
@@ -73,7 +73,7 @@ export default class InteractElement extends Component {
   }
 
   update(params: UpdateParams) {
-    let { x: _x, y: _y, width: _width, height: _height } = params;
+    const { x: _x, y: _y, width: _width, height: _height } = params;
     this.setProperties({
       _x,
       _y,
@@ -94,13 +94,15 @@ export default class InteractElement extends Component {
   }
 
   @action
-  onResize(event: InteractEvent) {
-    this.update({
-      x: this._x + event.deltaRect.left,
-      y: this._y + event.deltaRect.top,
-      width: event.rect.width,
-      height: event.rect.height
-    });
+  onResize(event: ResizeEvent) {
+    if (event.deltaRect) {
+      this.update({
+        x: this._x + event.deltaRect.left,
+        y: this._y + event.deltaRect.top,
+        width: event.rect.width,
+        height: event.rect.height
+      });
+    }
   }
 
   @action
@@ -112,4 +114,4 @@ export default class InteractElement extends Component {
       height: this._height
     });
   }
-};
+}

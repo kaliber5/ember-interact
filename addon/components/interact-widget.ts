@@ -2,22 +2,22 @@ import Component from '@ember/component';
 // @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/interact-widget';
 import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember-decorators/object';
-import { DraggableOptions, ResizableOptions } from 'interactjs';
+import { action, computed } from '@ember/object';
 import { assign } from '@ember/polyfills';
-import { readOnly, reads } from '@ember-decorators/object/computed';
+import { readOnly, reads } from '@ember/object/computed';
 import { UpdateParams } from './interact-element';
 import { next } from '@ember/runloop';
+import { DraggableOptions, ResizableOptions } from '@interactjs/types/types';
 
 @tagName('')
 @layout(template)
 export default class InteractWidget extends Component {
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
-  selectable: boolean = this.selectable || false;
-  selected: boolean = this.selected || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
+  selectable: boolean = false;
+  selected: boolean = false;
 
-  resizeHandles?: boolean | 'center' | 'corner' = this.resizeHandles !== undefined ? this.resizeHandles : true;
+  resizeHandles?: boolean | 'center' | 'corner' = true;
 
   onChange(_params: UpdateParams) {
   }
@@ -33,13 +33,13 @@ export default class InteractWidget extends Component {
 
   @computed('resizeHandles', 'isResizable')
   get hasCenterHandles() {
-    let handles = this.resizeHandles;
+    const handles = this.resizeHandles;
     return this.isResizable && (handles === true || handles === 'center');
   }
 
   @computed('resizeHandles', 'isResizable')
   get hasCornerHandles() {
-    let handles = this.resizeHandles;
+    const handles = this.resizeHandles;
     return this.isResizable && (handles === true || handles === 'corner');
   }
 
@@ -50,7 +50,7 @@ export default class InteractWidget extends Component {
 
   @computed('_resizable')
   get isResizable() {
-    let resizable = this._resizable;
+    const resizable = this._resizable;
     return resizable !== false && resizable.enabled !== false;
   }
 
@@ -66,8 +66,8 @@ export default class InteractWidget extends Component {
 
   @computed('resizable')
   get _resizable(): ResizableOptions | false {
-    let orig = this.get('resizable');
-    let defaults: ResizableOptions = {
+    const orig = this.resizable;
+    const defaults: ResizableOptions = {
       allowFrom: '.interact__handle',
       margin: 1
     };
@@ -128,4 +128,4 @@ export default class InteractWidget extends Component {
     document.removeEventListener('click', this.deselect, false);
     document.removeEventListener('mousedown', this.validateDeselect, true);
   }
-};
+}

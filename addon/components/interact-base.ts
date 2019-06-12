@@ -2,17 +2,18 @@
 import template from '../templates/components/interact-base';
 import Component from '@ember/component';
 import { attribute, classNames, layout } from '@ember-decorators/component';
-import { computed } from '@ember-decorators/object';
-import interact, {
-  DraggableOptions,
-  ResizableOptions,
-  Interactable,
-  OnEventName,
-  Listener
-} from 'interactjs';
+import { computed } from '@ember/object';
+
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
-import { DOMElement } from "../../types/interactjs";
+import {
+  DOMElement,
+  DraggableOptions,
+  Interactable, Listener,
+  OnEventName,
+  ResizableOptions
+} from '@interactjs/types/types';
+import interact from 'interactjs';
 
 type ActionName =
   'onDragStart' |
@@ -41,39 +42,39 @@ type ActionName =
   'onHold';
 
 const eventActionMap: [OnEventName, ActionName][] = [
-    ['dragstart', 'onDragStart'],
-    ['dragmove', 'onDragMove'],
-    ['draginertiastart', 'onDragInertiaStart'],
-    ['dragend', 'onDragEnd'],
-    ['resizestart', 'onResizeStart'],
-    ['resizemove', 'onResizeMove'],
-    ['resizeinertiastart', 'onResizeInertiaStart'],
-    ['resizeend', 'onResizeEnd'],
-    ['gesturestart', 'onGestureStart'],
-    ['gesturemove', 'onGestureMove'],
-    ['gestureend', 'onGestureEnd'],
-    // drop
-    ['dropactivate', 'onDropActivate'],
-    ['dropdeactivate', 'onDropDeactivate'],
-    ['dragenter', 'onDragEnter'],
-    ['dragleave', 'onDragLeave'],
-    ['dropmove', 'onDropMove'],
-    ['drop', 'onDrop'],
-    // pointer events
-    ['down', 'onDown'],
-    ['move', 'onMove'],
-    ['up', 'onUp'],
-    ['cancel', 'onCancel'],
-    ['tap', 'onTap'],
-    ['doubletap', 'onDoubleTap'],
-    ['hold', 'onHold']
+  ['dragstart', 'onDragStart'],
+  ['dragmove', 'onDragMove'],
+  ['draginertiastart', 'onDragInertiaStart'],
+  ['dragend', 'onDragEnd'],
+  ['resizestart', 'onResizeStart'],
+  ['resizemove', 'onResizeMove'],
+  ['resizeinertiastart', 'onResizeInertiaStart'],
+  ['resizeend', 'onResizeEnd'],
+  ['gesturestart', 'onGestureStart'],
+  ['gesturemove', 'onGestureMove'],
+  ['gestureend', 'onGestureEnd'],
+  // drop
+  ['dropactivate', 'onDropActivate'],
+  ['dropdeactivate', 'onDropDeactivate'],
+  ['dragenter', 'onDragEnter'],
+  ['dragleave', 'onDragLeave'],
+  ['dropmove', 'onDropMove'],
+  ['drop', 'onDrop'],
+  // pointer events
+  ['down', 'onDown'],
+  ['move', 'onMove'],
+  ['up', 'onUp'],
+  ['cancel', 'onCancel'],
+  ['tap', 'onTap'],
+  ['doubletap', 'onDoubleTap'],
+  ['hold', 'onHold']
 ];
 
 @layout(template)
 @classNames('interact')
 export default class InteractBase extends Component {
-  draggable: DraggableOptions | boolean = this.draggable || false;
-  resizable: ResizableOptions | boolean = this.resizable || false;
+  draggable: DraggableOptions | boolean = false;
+  resizable: ResizableOptions | boolean = false;
   interactable?: Interactable;
   restrictToElement?: DOMElement;
 
@@ -82,8 +83,8 @@ export default class InteractBase extends Component {
 
   @computed('draggable')
   get _draggable(): DraggableOptions | boolean {
-    let orig = this.draggable;
-    let defaults: DraggableOptions = {
+    const orig = this.draggable;
+    const defaults: DraggableOptions = {
     };
     if (this.restrictToElement) {
       defaults.restrict = {
@@ -103,8 +104,8 @@ export default class InteractBase extends Component {
 
   @computed('resizable', 'restrict')
   get _resizable(): ResizableOptions | boolean {
-    let orig = this.resizable;
-    let defaults: ResizableOptions = {
+    const orig = this.resizable;
+    const defaults: ResizableOptions = {
       edges: { left: true, right: true, bottom: true, top: true },
     };
 
@@ -124,15 +125,13 @@ export default class InteractBase extends Component {
   }
 
   setupInteractable() {
-    let interactable: Interactable;
-
-    interactable = interact(this.element)
+    const interactable: Interactable = interact(this.element)
       .draggable(this._draggable)
       .resizable(this._resizable);
 
     eventActionMap
       .forEach(([eventName, actionName]) => {
-        let fn = this[actionName];
+        const fn = this[actionName];
         if (typeof fn === 'function') {
           interactable.on(eventName, bind(this, fn))
         }
@@ -181,4 +180,4 @@ export default class InteractBase extends Component {
       this.interactable.unset();
     }
   }
-};
+}
