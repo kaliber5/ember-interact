@@ -4,7 +4,7 @@ import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import { action, computed } from '@ember/object';
 import { htmlSafe } from '@ember/string';
-import { DraggableOptions, ResizableOptions, InteractEvent } from 'interactjs';
+import { DraggableOptions, ResizableOptions, ResizeEvent, InteractEvent } from '@interactjs/types/types';
 
 export interface UpdateParams {
   x: number;
@@ -94,13 +94,15 @@ export default class InteractElement extends Component {
   }
 
   @action
-  onResize(event: InteractEvent) {
-    this.update({
-      x: this._x + event.deltaRect.left,
-      y: this._y + event.deltaRect.top,
-      width: event.rect.width,
-      height: event.rect.height
-    });
+  onResize(event: ResizeEvent) {
+    if (event.deltaRect) {
+      this.update({
+        x: this._x + event.deltaRect.left,
+        y: this._y + event.deltaRect.top,
+        width: event.rect.width,
+        height: event.rect.height
+      });
+    }
   }
 
   @action

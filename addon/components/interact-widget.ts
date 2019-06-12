@@ -3,11 +3,11 @@ import Component from '@ember/component';
 import template from '../templates/components/interact-widget';
 import { layout, tagName } from '@ember-decorators/component';
 import { action, computed } from '@ember/object';
-import { DraggableOptions, ResizableOptions } from 'interactjs';
 import { assign } from '@ember/polyfills';
 import { readOnly, reads } from '@ember/object/computed';
 import { UpdateParams } from './interact-element';
 import { next } from '@ember/runloop';
+import { DraggableOptions, ResizableOptions } from '@interactjs/types/types';
 
 @tagName('')
 @layout(template)
@@ -66,7 +66,7 @@ export default class InteractWidget extends Component {
 
   @computed('resizable')
   get _resizable(): ResizableOptions | false {
-    const orig = this.get('resizable');
+    const orig = this.resizable;
     const defaults: ResizableOptions = {
       allowFrom: '.interact__handle',
       margin: 1

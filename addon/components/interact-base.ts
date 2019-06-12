@@ -3,16 +3,17 @@ import template from '../templates/components/interact-base';
 import Component from '@ember/component';
 import { attribute, classNames, layout } from '@ember-decorators/component';
 import { computed } from '@ember/object';
-import interact, {
-  DOMElement,
-  DraggableOptions,
-  ResizableOptions,
-  Interactable,
-  OnEventName,
-  Listener
-} from 'interactjs';
+
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
+import {
+  DOMElement,
+  DraggableOptions,
+  Interactable, Listener,
+  OnEventName,
+  ResizableOptions
+} from '@interactjs/types/types';
+import interact from 'interactjs';
 
 type ActionName =
   'onDragStart' |
