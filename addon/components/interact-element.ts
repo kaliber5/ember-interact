@@ -63,7 +63,7 @@ export default class InteractElement extends Component {
 
   @computed('_x', '_y', '_width', '_height')
   get style() {
-    return htmlSafe(`transform: translate(${this._x}px, ${this._y}px); width: ${this._width}px; height: ${this._height}px`);
+    return htmlSafe(`transform: translate3d(${this._x}px, ${this._y}px, 0); width: ${this._width}px; height: ${this._height}px`);
   }
 
   onChange(_params: UpdateParams) {
