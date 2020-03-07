@@ -1,1 +1,11 @@
-{{yield}}
+<div
+  class="interact"
+  role="button"
+  ...attributes
+  {{on "click" this.handleClick}}
+  {{did-insert this.setupInteractable}}
+  {{did-update this.setupInteractable @restrictToElement}}
+  {{style @style}}
+>
+  {{yield}}
+</div>

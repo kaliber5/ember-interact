@@ -3,7 +3,6 @@ import template from '../templates/components/interact-element';
 import Component from '@ember/component';
 import { layout, tagName } from '@ember-decorators/component';
 import { action, computed } from '@ember/object';
-import { htmlSafe } from '@ember/string';
 import { DraggableOptions, ResizableOptions, ResizeEvent, InteractEvent } from '@interactjs/types/types';
 
 export interface UpdateParams {
@@ -63,7 +62,11 @@ export default class InteractElement extends Component {
 
   @computed('_x', '_y', '_width', '_height')
   get style() {
-    return htmlSafe(`transform: translate3d(${this._x}px, ${this._y}px, 0); width: ${this._width}px; height: ${this._height}px`);
+    return {
+      transform: `translate3d(${this._x}px, ${this._y}px, 0)`,
+      width: `${this._width}px`,
+      height: `${this._height}px`
+    };
   }
 
   onChange(_params: UpdateParams) {

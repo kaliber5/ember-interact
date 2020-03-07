@@ -1,8 +1,8 @@
 // @ts-ignore: Ignore import of compiled template
 import template from '../templates/components/interact-base';
 import Component from '@ember/component';
-import { attribute, classNames, layout } from '@ember-decorators/component';
-import { computed } from '@ember/object';
+import { layout, tagName } from '@ember-decorators/component';
+import { action } from '@ember/object';
 
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
@@ -70,22 +70,19 @@ const eventActionMap: [OnEventName, ActionName][] = [
   ['hold', 'onHold']
 ];
 
+@tagName("")
 @layout(template)
-@classNames('interact')
 export default class InteractBase extends Component {
   draggable: DraggableOptions | boolean = false;
   resizable: ResizableOptions | boolean = false;
   interactable?: Interactable;
   restrictToElement?: DOMElement;
 
-  @attribute
-  style?: string;
-
-  @computed('draggable')
   get _draggable(): DraggableOptions | boolean {
     const orig = this.draggable;
     const defaults: DraggableOptions = {
     };
+
     if (this.restrictToElement) {
       defaults.restrict = {
         restriction: this.restrictToElement,
@@ -102,7 +99,6 @@ export default class InteractBase extends Component {
     return assign({}, defaults, orig);
   }
 
-  @computed('resizable', 'restrict')
   get _resizable(): ResizableOptions | boolean {
     const orig = this.resizable;
     const defaults: ResizableOptions = {
@@ -124,8 +120,17 @@ export default class InteractBase extends Component {
     return assign({}, defaults, orig);
   }
 
-  setupInteractable() {
-    const interactable: Interactable = interact(this.element)
+  @action
+  setupInteractable(element: HTMLElement) {
+    if (this.interactable) {
+      this.interactable.set({
+        drag: this._draggable,
+        resize: this._resizable,
+      });
+      return;
+    }
+
+    const interactable: Interactable = interact(element)
       .draggable(this._draggable)
       .resizable(this._resizable);
 
@@ -133,7 +138,7 @@ export default class InteractBase extends Component {
       .forEach(([eventName, actionName]) => {
         const fn = this[actionName];
         if (typeof fn === 'function') {
-          interactable.on(eventName, bind(this, fn))
+          interactable.on(eventName, bind(this, fn));
         }
       });
 
@@ -167,12 +172,9 @@ export default class InteractBase extends Component {
 
   onClick(_e: MouseEvent) {}
 
-  click(e: MouseEvent) {
+  @action
+  handleClick(e: MouseEvent) {
     this.onClick(e);
-  }
-
-  didInsertElement() {
-    this.setupInteractable();
   }
 
   willDestroyElement() {
