@@ -1,9 +1,7 @@
-// @ts-ignore: Ignore import of compiled template
-import template from '../templates/components/interact-element';
-import Component from '@ember/component';
-import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
-import { DraggableOptions, ResizableOptions, ResizeEvent, InteractEvent } from '@interactjs/types/types';
+import { tracked } from '@glimmer/tracking';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
+import { DraggableOptions, InteractEvent, ResizableOptions, ResizeEvent } from '@interactjs/types/types';
 
 export interface UpdateParams {
   x: number;
@@ -12,55 +10,54 @@ export interface UpdateParams {
   height: number;
 }
 
-@tagName('')
-@layout(template)
-export default class InteractElement extends Component {
-
-  draggable: DraggableOptions | boolean = false;
-  resizable: ResizableOptions | boolean = false;
+export interface InteractElementArgs {
+  draggable?: DraggableOptions | boolean;
+  resizable?: ResizableOptions | boolean;
 
   x?: number;
   y?: number;
   width?: number;
   height?: number;
 
-  @computed('x')
+  onChange?: (params: UpdateParams) => void;
+  onChangeEnd?: (params: UpdateParams) => void;
+}
+
+export default class InteractElement extends Component<InteractElementArgs> {
+
+  @tracked __x?: number;
+  @tracked __y?: number;
+  @tracked __width?: number;
+  @tracked __height?: number;
+
   get _x() {
-    return this.x || 0;
+    return this.__x ?? this.args.x ?? 0;
   }
-  set _x(_value) {
-    // @ts-ignore
-    return _value;
+  set _x(value) {
+    this.__x = value;
   }
 
-  @computed('y')
   get _y() {
-    return this.y || 0;
+    return this.__y ?? this.args.y ?? 0;
   }
-  set _y(_value) {
-    // @ts-ignore
-    return _value;
+  set _y(value) {
+    this.__y = value
   }
 
-  @computed('width')
   get _width() {
-    return this.width || 100;
+    return this.__width ?? this.args.width ?? 100;
   }
-  set _width(_value) {
-    // @ts-ignore
-    return _value;
+  set _width(value) {
+    this.__width = value;
   }
 
-  @computed('height')
   get _height() {
-    return this.height || 100;
+    return this.__height ?? this.args.height ?? 100;
   }
-  set _height(_value) {
-    // @ts-ignore
-    return _value;
+  set _height(value) {
+    this.__height = value;
   }
 
-  @computed('_x', '_y', '_width', '_height')
   get style() {
     return {
       transform: `translate3d(${this._x}px, ${this._y}px, 0)`,
@@ -69,21 +66,13 @@ export default class InteractElement extends Component {
     };
   }
 
-  onChange(_params: UpdateParams) {
-  }
-
-  onChangeEnd(_params: UpdateParams) {
-  }
-
   update(params: UpdateParams) {
     const { x: _x, y: _y, width: _width, height: _height } = params;
-    this.setProperties({
-      _x,
-      _y,
-      _width,
-      _height
-    });
-    this.onChange(params);
+    this._x = _x;
+    this._y = _y;
+    this._width = _width;
+    this._height = _height;
+    this.args.onChange?.(params);
   }
 
   @action
@@ -110,7 +99,7 @@ export default class InteractElement extends Component {
 
   @action
   onInteractEnd(_e: InteractEvent) {
-    this.onChangeEnd({
+    this.args.onChangeEnd?.({
       x: this._x,
       y: this._y,
       width: this._width,

@@ -1,18 +1,8 @@
-// @ts-ignore: Ignore import of compiled template
-import template from '../templates/components/interact-base';
-import Component from '@ember/component';
-import { layout, tagName } from '@ember-decorators/component';
+import Component from '@glimmer/component';
 import { action } from '@ember/object';
-
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
-import {
-  DOMElement,
-  DraggableOptions,
-  Interactable, Listener,
-  OnEventName,
-  ResizableOptions
-} from '@interactjs/types/types';
+import { DraggableOptions, Interactable, Listener, OnEventName, ResizableOptions } from '@interactjs/types/types';
 import interact from 'interactjs';
 
 type ActionName =
@@ -70,22 +60,50 @@ const eventActionMap: [OnEventName, ActionName][] = [
   ['hold', 'onHold']
 ];
 
-@tagName("")
-@layout(template)
-export default class InteractBase extends Component {
-  draggable: DraggableOptions | boolean = false;
-  resizable: ResizableOptions | boolean = false;
+export interface InteractBaseArgs {
+  draggable: DraggableOptions | boolean;
+  resizable: ResizableOptions | boolean;
+
+  style: object;
+  restrictToElement?: HTMLElement;
+
+  onDragStart?: Listener;
+  onDragMove?: Listener;
+  onDragInertiaStart?: Listener;
+  onDragEnd?: Listener;
+  onResizeStart?: Listener;
+  onResizeMove?: Listener;
+  onResizeInertiaStart?: Listener;
+  onResizeEnd?: Listener;
+  onGestureStart?: Listener;
+  onGestureMove?: Listener;
+  onGestureEnd?: Listener;
+  onDropActivate?: Listener;
+  onDropDeactivate?: Listener;
+  onDragEnter?: Listener;
+  onDragLeave?: Listener;
+  onDropMove?: Listener;
+  onDrop?: Listener;
+  onDown?: Listener;
+  onMove?: Listener;
+  onUp?: Listener;
+  onCancel?: Listener;
+  onTap?: Listener;
+  onDoubleTap?: Listener;
+  onHold?: Listener;
+}
+
+export default class InteractBase extends Component<InteractBaseArgs> {
   interactable?: Interactable;
-  restrictToElement?: DOMElement;
 
   get _draggable(): DraggableOptions | boolean {
-    const orig = this.draggable;
+    const orig = this.args.draggable;
     const defaults: DraggableOptions = {
     };
 
-    if (this.restrictToElement) {
+    if (this.args.restrictToElement) {
       defaults.restrict = {
-        restriction: this.restrictToElement,
+        restriction: this.args.restrictToElement,
         elementRect: { left: 0, right: 1, top: 0, bottom: 1 }
       }
     }
@@ -100,14 +118,14 @@ export default class InteractBase extends Component {
   }
 
   get _resizable(): ResizableOptions | boolean {
-    const orig = this.resizable;
+    const orig = this.args.resizable;
     const defaults: ResizableOptions = {
       edges: { left: true, right: true, bottom: true, top: true },
     };
 
-    if (this.restrictToElement) {
+    if (this.args.restrictToElement) {
       defaults.restrictEdges = {
-        outer: this.restrictToElement
+        outer: this.args.restrictToElement
       };
     }
 
@@ -136,45 +154,13 @@ export default class InteractBase extends Component {
 
     eventActionMap
       .forEach(([eventName, actionName]) => {
-        const fn = this[actionName];
+        const fn = this.args[actionName];
         if (typeof fn === 'function') {
           interactable.on(eventName, bind(this, fn));
         }
       });
 
     this.interactable = interactable;
-  }
-
-  onDragStart?: Listener;
-  onDragMove?: Listener;
-  onDragInertiaStart?: Listener;
-  onDragEnd?: Listener;
-  onResizeStart?: Listener;
-  onResizeMove?: Listener;
-  onResizeInertiaStart?: Listener;
-  onResizeEnd?: Listener;
-  onGestureStart?: Listener;
-  onGestureMove?: Listener;
-  onGestureEnd?: Listener;
-  onDropActivate?: Listener;
-  onDropDeactivate?: Listener;
-  onDragEnter?: Listener;
-  onDragLeave?: Listener;
-  onDropMove?: Listener;
-  onDrop?: Listener;
-  onDown?: Listener;
-  onMove?: Listener;
-  onUp?: Listener;
-  onCancel?: Listener;
-  onTap?: Listener;
-  onDoubleTap?: Listener;
-  onHold?: Listener;
-
-  onClick(_e: MouseEvent) {}
-
-  @action
-  handleClick(e: MouseEvent) {
-    this.onClick(e);
   }
 
   willDestroyElement() {

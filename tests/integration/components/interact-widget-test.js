@@ -1,8 +1,9 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
-import { click, find, render, triggerEvent } from '@ember/test-helpers';
+import { click, find, render, triggerEvent, settled } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { setupSinonSinoff } from 'ember-sinon-sinoff/test-support';
+import { handleIdentifiers } from '@kaliber5/ember-interact/components/interact-widget';
 
 module('Integration | Component | interact-widget', function(hooks) {
   setupRenderingTest(hooks);
@@ -33,21 +34,32 @@ module('Integration | Component | interact-widget', function(hooks) {
   test('renders handles', async function(assert) {
     await render(hbs`{{interact-widget resizable=true resizeHandles=resizeHandles}}`);
 
-    this.set('resizeHandles', false);
-    assert.dom('.interact__handle').doesNotExist();
+    // this.set('resizeHandles', false);
+    // await settled();
+    // assert.dom('.interact__handle').doesNotExist();
+    //
+    // this.set('resizeHandles', true);
+    // await settled();
+    // assert.dom('.interact__handle').exists({ count: 8 });
+    // assert.dom('.interact__handle--center').exists({ count: 4 });
+    // assert.dom('.interact__handle--corner').exists({ count: 4 });
+    //
+    // this.set('resizeHandles', 'corner');
+    // await settled();
+    // assert.dom('.interact__handle').exists({ count: 4 });
+    // assert.dom('.interact__handle--corner').exists({ count: 4 });
+    //
+    // this.set('resizeHandles', 'center');
+    // await settled();
+    // assert.dom('.interact__handle').exists({ count: 4 });
+    // assert.dom('.interact__handle--center').exists({ count: 4 });
 
-    this.set('resizeHandles', true);
-    assert.dom('.interact__handle').exists({ count: 8 });
-    assert.dom('.interact__handle--center').exists({ count: 4 });
-    assert.dom('.interact__handle--corner').exists({ count: 4 });
-
-    this.set('resizeHandles', 'corner');
-    assert.dom('.interact__handle').exists({ count: 4 });
-    assert.dom('.interact__handle--corner').exists({ count: 4 });
-
-    this.set('resizeHandles', 'center');
-    assert.dom('.interact__handle').exists({ count: 4 });
-    assert.dom('.interact__handle--center').exists({ count: 4 });
+    for (const id of Object.values(handleIdentifiers)) {
+      this.set('resizeHandles', [id]);
+      await settled();
+      assert.dom('.interact__handle').exists({ count: 1 });
+      assert.dom(`.interact__handle--${id}`).exists({ count: 1 });
+    }
   });
 
   test('it can be selected and deselected', async function(assert) {
@@ -56,6 +68,7 @@ module('Integration | Component | interact-widget', function(hooks) {
 
     assert.dom('.interact').hasNoClass('interact--selected');
     this.set('selected', true);
+    await settled();
     assert.dom('.interact').hasClass('interact--selected');
   });
 
