@@ -1,48 +1,34 @@
-{{#interact-element
-  draggable=_draggable
-  resizable=_resizable
-  x=x
-  y=y
-  width=width
-  height=height
-  onChange=onChange
-  onChangeEnd=onChangeEnd
-as |element|
-}}
-  {{#element.base
-    onDown=(action "select")
-    class=(if selected "interact--selected")
-    restrictToElement=restrictToElement
-  }}
+<InteractElement @draggable={{this._draggable}} @resizable={{this._resizable}} @x={{this.x}} @y={{this.y}} @width={{this.width}} @height={{this.height}} @onChange={{this.onChange}} @onChangeEnd={{this.onChangeEnd}} as |element|>
+  <element.base @onDown={{this.select}} @class={{if this.selected "interact--selected"}} @restrictToElement={{this.restrictToElement}}>
     <div class="interact__inner">
       {{yield}}
     </div>
-    {{#if showHandles}}
-      {{#if hasUpperLeftHandle}}
+    {{#if this.showHandles}}
+      {{#if this.hasUpperLeftHandle}}
         <div class="interact__handle interact__handle--corner interact__handle--ul"></div>
       {{/if}}
-      {{#if hasUpperRightHandle}}
+      {{#if this.hasUpperRightHandle}}
         <div class="interact__handle interact__handle--corner interact__handle--ur"></div>
       {{/if}}
-      {{#if hasLowerLeftHandle}}
+      {{#if this.hasLowerLeftHandle}}
         <div class="interact__handle interact__handle--corner interact__handle--ll"></div>
       {{/if}}
-      {{#if hasLowerRightHandle}}
+      {{#if this.hasLowerRightHandle}}
         <div class="interact__handle interact__handle--corner interact__handle--lr"></div>
       {{/if}}
 
-      {{#if hasTopCenterHandle}}
+      {{#if this.hasTopCenterHandle}}
         <div class="interact__handle interact__handle--center interact__handle--tc"></div>
       {{/if}}
-      {{#if hasRightCenterHandle}}
+      {{#if this.hasRightCenterHandle}}
         <div class="interact__handle interact__handle--center interact__handle--rc"></div>
       {{/if}}
-      {{#if hasBottomCenterHandle}}
+      {{#if this.hasBottomCenterHandle}}
         <div class="interact__handle interact__handle--center interact__handle--bc"></div>
       {{/if}}
-      {{#if hasLeftCenterHandle}}
+      {{#if this.hasLeftCenterHandle}}
         <div class="interact__handle interact__handle--center interact__handle--lc"></div>
       {{/if}}
     {{/if}}
-  {{/element.base}}
-{{/interact-element}}
+  </element.base>
+</InteractElement>
