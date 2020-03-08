@@ -22,8 +22,8 @@ module('Integration | Component | interact-widget', function(hooks) {
   test('it receives position and scale props', async function(assert) {
     await render(hbs`{{interact-widget x=10 y=20 width=50 height=200}}`);
 
-    let el = find('.interact');
-    let rect = el.getBoundingClientRect();
+    const el = find('.interact');
+    const rect = el.getBoundingClientRect();
 
     assert.equal(rect.left, 10);
     assert.equal(rect.top, 20);
@@ -73,9 +73,9 @@ module('Integration | Component | interact-widget', function(hooks) {
   });
 
   test('it calls onSelect and onDeselect', async function(assert) {
-    let select = this.sandbox.spy();
+    const select = this.sandbox.spy();
     this.set('select', select);
-    let deselect = this.sandbox.spy();
+    const deselect = this.sandbox.spy();
     this.set('deselect', deselect);
     await render(hbs`{{interact-widget selectable=true onSelect=select onDeselect=deselect}}`);
 
