@@ -1,7 +1,9 @@
-{{yield
-  (hash
-    base=(component "interact-base" restrictToElement=this.element)
-    element=(component "interact-element" restrictToElement=this.element)
-    widget=(component "interact-widget" restrictToElement=this.element)
-  )
-}}
+<div class="interact-canvas" ...attributes {{ref this '_element'}}>
+  {{yield
+    (hash
+      base=(component "interact-base" restrictToElement=this._element)
+      element=(component "interact-element" restrictToElement=this._element)
+      widget=(component "interact-widget" restrictToElement=this._element)
+    )
+  }}
+</div>

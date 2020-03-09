@@ -1,5 +1,5 @@
 <InteractElement @draggable={{this._draggable}} @resizable={{this._resizable}} @x={{this.x}} @y={{this.y}} @width={{this.width}} @height={{this.height}} @onChange={{this.onChange}} @onChangeEnd={{this.onChangeEnd}} as |element|>
-  <element.base @onDown={{this.select}} @class={{if this.selected "interact--selected"}} @restrictToElement={{this.restrictToElement}}>
+  <element.base @onDown={{this.select}} class={{if this.selected "interact--selected"}} @restrictToElement={{@restrictToElement}}>
     <div class="interact__inner">
       {{yield}}
     </div>
