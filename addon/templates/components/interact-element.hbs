@@ -1,14 +1,14 @@
 {{#let
   (component
     "interact-base"
-    style=style
-    draggable=draggable
-    resizable=resizable
-    restrictToElement=restrictToElement
-    onDragMove=(action "onMove")
-    onResizeMove=(action "onResize")
-    onDragEnd=(action "onInteractEnd")
-    onResizeEnd=(action "onInteractEnd")
+    style=this.style
+    draggable=this.draggable
+    resizable=this.resizable
+    restrictToElement=this.restrictToElement
+    onDragMove=this.onMove
+    onResizeMove=this.onResize
+    onDragEnd=this.onInteractEnd
+    onResizeEnd=this.onInteractEnd
 
   ) as |base|}}
   {{#if (has-block-params)}}

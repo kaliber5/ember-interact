@@ -1,34 +1,20 @@
 <h1>ember-interact</h1>
 
 <code>
-  {{x}} : {{y}} / {{width}} x {{height}}
+  {{this.x}} : {{this.y}} / {{this.width}} x {{this.height}}
 </code>
 <p>
-  <button {{action "reset"}}>Reset</button>
-  <button {{action "noop" bubbles=false}}>Noop</button>
-  <button onclick={{action "noop"}}>Noop</button>
+  <button type="button" {{on "click" this.reset}}>Reset</button>
+  <button type="button" {{on "click" this.noop}}>Noop</button>
 </p>
 
 {{!-- template-lint-disable no-inline-styles --}}
 <div style="width:600px; height: 600px; border: dashed red">
-  {{#interact-canvas as |canvas|}}
-    {{#canvas.widget
-      x=x
-      y=y
-      width=width
-      height=height
-      draggable=true
-      resizable=(hash
+  <InteractCanvas as |canvas|>
+    <canvas.widget @x={{this.x}} @y={{this.y}} @width={{this.width}} @height={{this.height}} @draggable={{true}} @resizable={{hash
         preserveAspectRatio=true
-      )
-      selectable=true
-      selected=selected
-      resizeHandles="corner"
-      onChangeEnd=(action "update")
-      onSelect=(action (mut selected) true)
-      onDeselect=(action (mut selected) false)
-    }}
-      <img src="https://placeimg.com/640/480/nature" alt="" class="interact__image">
-    {{/canvas.widget}}
-  {{/interact-canvas}}
+      }} @selectable={{true}} @selected={{this.selected}} @resizeHandles="corner" @onChangeEnd={{this.update}} @onSelect={{fn (mut this.selected) true}} @onDeselect={{fn (mut this.selected) false}}>
+      <img src="https://placeimg.com/640/480/nature" alt="dummy" class="interact__image">
+    </canvas.widget>
+  </InteractCanvas>
 </div>
