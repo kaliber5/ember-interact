@@ -34,25 +34,25 @@ module('Integration | Component | interact-widget', function(hooks) {
   test('renders handles', async function(assert) {
     await render(hbs`{{interact-widget resizable=true resizeHandles=resizeHandles}}`);
 
-    // this.set('resizeHandles', false);
-    // await settled();
-    // assert.dom('.interact__handle').doesNotExist();
-    //
-    // this.set('resizeHandles', true);
-    // await settled();
-    // assert.dom('.interact__handle').exists({ count: 8 });
-    // assert.dom('.interact__handle--center').exists({ count: 4 });
-    // assert.dom('.interact__handle--corner').exists({ count: 4 });
-    //
-    // this.set('resizeHandles', 'corner');
-    // await settled();
-    // assert.dom('.interact__handle').exists({ count: 4 });
-    // assert.dom('.interact__handle--corner').exists({ count: 4 });
-    //
-    // this.set('resizeHandles', 'center');
-    // await settled();
-    // assert.dom('.interact__handle').exists({ count: 4 });
-    // assert.dom('.interact__handle--center').exists({ count: 4 });
+    this.set('resizeHandles', false);
+    await settled();
+    assert.dom('.interact__handle').doesNotExist();
+
+    this.set('resizeHandles', true);
+    await settled();
+    assert.dom('.interact__handle').exists({ count: 8 });
+    assert.dom('.interact__handle--center').exists({ count: 4 });
+    assert.dom('.interact__handle--corner').exists({ count: 4 });
+
+    this.set('resizeHandles', 'corner');
+    await settled();
+    assert.dom('.interact__handle').exists({ count: 4 });
+    assert.dom('.interact__handle--corner').exists({ count: 4 });
+
+    this.set('resizeHandles', 'center');
+    await settled();
+    assert.dom('.interact__handle').exists({ count: 4 });
+    assert.dom('.interact__handle--center').exists({ count: 4 });
 
     for (const id of Object.values(handleIdentifiers)) {
       this.set('resizeHandles', [id]);
