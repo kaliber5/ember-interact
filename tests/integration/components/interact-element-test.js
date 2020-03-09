@@ -19,8 +19,8 @@ module('Integration | Component | interact-element', function(hooks) {
   test('it receives position and scale props', async function(assert) {
     await render(hbs`{{interact-element x=10 y=20 width=50 height=200}}`);
 
-    let el = find('.interact');
-    let rect = el.getBoundingClientRect();
+    const el = find('.interact');
+    const rect = el.getBoundingClientRect();
 
     assert.equal(rect.left, 10);
     assert.equal(rect.top, 20);

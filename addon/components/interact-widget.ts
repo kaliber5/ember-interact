@@ -1,75 +1,107 @@
-import Component from '@ember/component';
-// @ts-ignore: Ignore import of compiled template
-import template from '../templates/components/interact-widget';
-import { layout, tagName } from '@ember-decorators/component';
-import { action, computed } from '@ember/object';
+import Component from '@glimmer/component';
+import { action } from '@ember/object';
 import { assign } from '@ember/polyfills';
-import { readOnly, reads } from '@ember/object/computed';
 import { UpdateParams } from './interact-element';
 import { next } from '@ember/runloop';
 import { DraggableOptions, ResizableOptions } from '@interactjs/types/types';
+import { isArray } from '@ember/array';
 
-@tagName('')
-@layout(template)
-export default class InteractWidget extends Component {
-  draggable: DraggableOptions | boolean = false;
-  resizable: ResizableOptions | boolean = false;
-  selectable: boolean = false;
-  selected: boolean = false;
+export enum handleIdentifiers {
+  UPPER_LEFT = 'ul',
+  UPPER_RIGHT = 'ur',
+  LOWER_LEFT = 'll',
+  LOWER_RIGHT = 'lr',
+  CENTER_TOP = 'tc',
+  CENTER_RIGHT = 'rc',
+  CENTER_BOTTOM = 'bc',
+  CENTER_LEFT = 'lc'
+}
 
-  resizeHandles?: boolean | 'center' | 'corner' = true;
+const cornerHandles = [handleIdentifiers.UPPER_LEFT, handleIdentifiers.UPPER_RIGHT, handleIdentifiers.LOWER_LEFT, handleIdentifiers.LOWER_RIGHT];
 
-  onChange(_params: UpdateParams) {
+export interface InteractWidgetArgs {
+  draggable: DraggableOptions | boolean;
+  resizable: ResizableOptions | boolean;
+  selectable: boolean;
+  selected: boolean;
+  resizeHandles?: boolean | 'center' | 'corner' | handleIdentifiers[];
+
+  x?: number;
+  y?: number;
+  width?: number;
+  height?: number;
+
+  onChange?: (params: UpdateParams) => void;
+  onChangeEnd?: (params: UpdateParams) => void;
+  onSelect?: () => void;
+  onDeselect?: () => void;
+}
+
+export default class InteractWidget extends Component<InteractWidgetArgs> {
+
+  get resizeHandles() {
+    return this.args.resizeHandles ?? true;
   }
 
-  onChangeEnd(_params: UpdateParams) {
-  }
-
-  onSelect() {
-  }
-
-  onDeselect() {
-  }
-
-  @computed('resizeHandles', 'isResizable')
-  get hasCenterHandles() {
+  get hasCenterHandles(): boolean {
     const handles = this.resizeHandles;
-    return this.isResizable && (handles === true || handles === 'center');
+    return (this.isResizable && handles === true || handles === 'center');
   }
 
-  @computed('resizeHandles', 'isResizable')
-  get hasCornerHandles() {
+  get hasCornerHandles(): boolean {
     const handles = this.resizeHandles;
-    return this.isResizable && (handles === true || handles === 'corner');
+    return (this.isResizable && handles === true || handles === 'corner');
   }
 
-  @computed('selectable', 'selected')
   get showHandles(): boolean {
-    return !this.selectable || this.selected;
+    return !this.args.selectable || this.args.selected;
   }
 
-  @computed('_resizable')
-  get isResizable() {
+  get isResizable(): boolean {
     const resizable = this._resizable;
     return resizable !== false && resizable.enabled !== false;
   }
 
-  @reads('hasCornerHandles') hasUpperLeftHandle?: boolean;
-  @reads('hasCornerHandles') hasUpperRightHandle?: boolean;
-  @reads('hasCornerHandles') hasLowerLeftHandle?: boolean;
-  @reads('hasCornerHandles') hasLowerRightHandle?: boolean;
+  get hasUpperLeftHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.UPPER_LEFT);
+  }
 
-  @reads('hasCenterHandles') hasTopCenterHandle?: boolean;
-  @reads('hasCenterHandles') hasRightCenterHandle?: boolean;
-  @reads('hasCenterHandles') hasBottomCenterHandle?: boolean;
-  @reads('hasCenterHandles') hasLeftCenterHandle?: boolean;
+  get hasUpperRightHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.UPPER_RIGHT);
+  }
 
-  @computed('resizable')
+  get hasLowerLeftHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.LOWER_LEFT);
+  }
+
+  get hasLowerRightHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.LOWER_RIGHT);
+  }
+
+  get hasTopCenterHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.CENTER_TOP);
+  }
+
+  get hasRightCenterHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.CENTER_RIGHT);
+  }
+
+  get hasBottomCenterHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.CENTER_BOTTOM);
+  }
+
+  get hasLeftCenterHandle(): boolean {
+    return this.hasHandle(handleIdentifiers.CENTER_LEFT);
+  }
+
+  private hasHandle(handleId: handleIdentifiers): boolean {
+    return (isArray(this.args.resizeHandles) && this.args.resizeHandles.includes(handleId)) || (cornerHandles.includes(handleId) ? this.hasCornerHandles : this.hasCenterHandles);
+  }
+
   get _resizable(): ResizableOptions | false {
-    const orig = this.resizable;
+    const orig = this.args.resizable;
     const defaults: ResizableOptions = {
-      allowFrom: '.interact__handle',
-      margin: 1
+      allowFrom: '.interact__handle', margin: 1
     };
 
     if (orig === false) {
@@ -81,51 +113,35 @@ export default class InteractWidget extends Component {
     return assign({}, defaults, orig);
   }
 
-  @readOnly('draggable') _draggable?: DraggableOptions;
+  get _draggable(): DraggableOptions | boolean {
+    return this.args.draggable;
+  }
 
-  @action
-  select() {
-    if (this.selectable) {
-      this.onSelect();
+  @action select(): void {
+    if (this.args.selectable) {
+      this.args.onSelect?.();
     }
   }
 
-  // make this an class field, so this is bound to the instance
-  deselect = (event: MouseEvent) => {
+  @action deselect(event: MouseEvent): void {
     if (this.ignoreDeselect) {
       this.ignoreDeselect = false;
       return;
     }
-    if (this.selectable
-      && !(event.target instanceof HTMLElement
-        && event.target.matches('.interact, .interact *'))
-    ) {
+    if (this.args.selectable && !(event.target instanceof HTMLElement && event.target.matches('.interact, .interact *'))) {
       next(this, () => {
-        if (!this.isDestroyed
-          && !this.isDestroying
-          && !event.defaultPrevented) {
-          this.onDeselect();
+        if (!this.isDestroyed && !this.isDestroying && !event.defaultPrevented) {
+          this.args.onDeselect?.();
         }
       });
     }
-  };
+  }
 
   ignoreDeselect = false;
 
-  validateDeselect = (event: MouseEvent) => {
+  @action validateDeselect(event: MouseEvent): void {
     if (event.target instanceof HTMLElement && event.target.matches('.interact, .interact *')) {
-      this.ignoreDeselect = true
+      this.ignoreDeselect = true;
     }
-  };
-
-  didInsertElement() {
-    document.addEventListener('click', this.deselect, false);
-    document.addEventListener('mousedown', this.validateDeselect, true);
-  }
-
-
-  willDestroyElement() {
-    document.removeEventListener('click', this.deselect, false);
-    document.removeEventListener('mousedown', this.validateDeselect, true);
   }
 }
