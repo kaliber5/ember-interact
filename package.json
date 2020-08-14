@@ -17,6 +17,7 @@
     "lint": "npm-run-all --aggregate-output --continue-on-error --parallel lint:*",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint . --ext js,ts",
+    "lint:ts": "tsc --noEmit",
     "prepublishOnly": "ember ts:precompile",
     "postpublish": "ember ts:clean",
     "start": "ember serve",

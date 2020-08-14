@@ -2,7 +2,7 @@ import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import { bind } from '@ember/runloop';
-import { DraggableOptions, Interactable, Listener, OnEventName, ResizableOptions } from '@interactjs/types/types';
+import { DraggableOptions, Interactable, Listener, ResizableOptions } from '@interactjs/types/typings';
 import interact from 'interactjs';
 
 type ActionName =
@@ -31,7 +31,7 @@ type ActionName =
   'onDoubleTap' |
   'onHold';
 
-const eventActionMap: [OnEventName, ActionName][] = [
+const eventActionMap: [string, ActionName][] = [
   ['dragstart', 'onDragStart'],
   ['dragmove', 'onDragMove'],
   ['draginertiastart', 'onDragInertiaStart'],
@@ -102,6 +102,9 @@ export default class InteractBase extends Component<InteractBaseArgs> {
     };
 
     if (this.args.restrictToElement) {
+      // @todo restrict feature needs to be refactored
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       defaults.restrict = {
         restriction: this.args.restrictToElement,
         elementRect: { left: 0, right: 1, top: 0, bottom: 1 }
@@ -124,6 +127,9 @@ export default class InteractBase extends Component<InteractBaseArgs> {
     };
 
     if (this.args.restrictToElement) {
+      // @todo restrict feature needs to be refactored
+      // eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+      // @ts-ignore
       defaults.restrictEdges = {
         outer: this.args.restrictToElement
       };

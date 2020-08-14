@@ -1,7 +1,7 @@
 import { tracked } from '@glimmer/tracking';
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
-import { DraggableOptions, InteractEvent, ResizableOptions, ResizeEvent } from '@interactjs/types/types';
+import { DraggableOptions, InteractEvent, ResizableOptions, ResizeEvent } from '@interactjs/types/typings';
 
 export interface UpdateParams {
   x: number;

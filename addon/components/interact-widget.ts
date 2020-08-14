@@ -3,7 +3,7 @@ import { action } from '@ember/object';
 import { assign } from '@ember/polyfills';
 import { UpdateParams } from './interact-element';
 import { next } from '@ember/runloop';
-import { DraggableOptions, ResizableOptions } from '@interactjs/types/types';
+import { DraggableOptions, ResizableOptions } from '@interactjs/types/typings';
 import { isArray } from '@ember/array';
 
 export enum handleIdentifiers {
