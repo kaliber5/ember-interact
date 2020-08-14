@@ -5,7 +5,7 @@
   "keywords": [
     "ember-addon"
   ],
-  "repository": "",
+  "repository": "https://github.com/kaliber5/ember-interact",
   "license": "MIT",
   "author": "Simon Ihmig <simon.ihmig@kaliber5.de>",
   "directories": {
@@ -86,6 +86,6 @@
     "configPath": "tests/dummy/config"
   },
   "publishConfig": {
-    "registry": "https://npm.kaliber5.de"
+    "registry": "https://npm.pkg.github.com/"
   }
 }
