@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = {
   root: true,
   parser: '@typescript-eslint/parser',
@@ -26,8 +28,7 @@ module.exports = {
     '@typescript-eslint/camelcase': 'off',
     '@typescript-eslint/no-unused-vars': ['error', { 'argsIgnorePattern': '^_' }],
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-explicit-any': 'off',
-    'ember/no-jquery': 'error'
+    '@typescript-eslint/no-explicit-any': 'off'
   },
   overrides: [
     // node files
@@ -56,10 +57,10 @@ module.exports = {
         node: true
       },
       plugins: ['node'],
-      rules: Object.assign({}, require('eslint-plugin-node').configs.recommended.rules, {
-        // add your custom rules and overrides for node files here
+      extends: ['plugin:node/recommended'],
+      rules: {
         '@typescript-eslint/no-var-requires': 'off'
-      })
+      }
     }
   ]
 };
