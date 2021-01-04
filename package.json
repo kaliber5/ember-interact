@@ -38,7 +38,7 @@
     "ember-on-helper": "^0.1.0",
     "ember-ref-modifier": "^1.0.1",
     "ember-style-modifier": "^0.6.0",
-    "interactjs": "^1.10.1"
+    "interactjs": "^1.10.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",

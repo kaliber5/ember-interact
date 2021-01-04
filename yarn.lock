@@ -1379,10 +1379,10 @@
   resolved "https://registry.yarnpkg.com/@iarna/toml/-/toml-2.2.5.tgz#b32366c89b43c6f8cefbdefac778b9c828e3ba8c"
   integrity sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg==
 
-"@interactjs/types@1.10.1":
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.1.tgz#1b676079579f5f619c24af95951248ad92de5e35"
-  integrity sha512-qJs3o2MrfLu62wnKNLfMZECa1mQY78hSAq9Ld0qJovV+j8qFk96ZI/3L6oXqyepNH3FaIyYPpWNBTlVUC7goPw==
+"@interactjs/types@1.10.2":
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/@interactjs/types/-/types-1.10.2.tgz#45a74d019f9b3e8fccd3ccc288b55bcf510106bc"
+  integrity sha512-l0T1bU8OHRv716ztQOYwP+K7b/lA76C0T3r/cdabbUv6CKeAFdFRRFlmNxYOM36SxMGWAiq5VWrN3SeXlB7Fow==
 
 "@nodelib/fs.scandir@2.1.3":
   version "2.1.3"
@@ -7975,12 +7975,12 @@ inquirer@^6:
     strip-ansi "^5.1.0"
     through "^2.3.6"
 
-interactjs@^1.10.1:
-  version "1.10.1"
-  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.10.1.tgz#0224cf3fe8f85dcebef439b1068f516730efe01b"
-  integrity sha512-h/VEGTaBv8ch7m52Y7uAHzOs2v6nNc+AVH2sE+T/q7T8liDLfHF+6G3RRP+l+/K3tZAQcHElvMn0EOkX6wni/g==
+interactjs@^1.10.2:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/interactjs/-/interactjs-1.10.2.tgz#b8efa1ecc72fd3e3b8da32ce5082df308b318ba1"
+  integrity sha512-5tj+4k0jtIzUj4TeLp4+F4VUAHXzQHnXfFwuaUsU1pnfRXiP3EqawsUpAn7gfAOS6Ltj6EQvvurCN9GJn/G/Pw==
   dependencies:
-    "@interactjs/types" "1.10.1"
+    "@interactjs/types" "1.10.2"
 
 interpret@^1.0.0:
   version "1.4.0"
