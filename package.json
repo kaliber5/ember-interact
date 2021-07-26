@@ -78,7 +78,7 @@
     "qunit-dom": "^1.6.0",
     "release-it": "^14.10.0",
     "release-it-lerna-changelog": "^3.1.0",
-    "sass": "^1.35.2",
+    "sass": "^1.36.0",
     "typescript": "~3.7.5"
   },
   "engines": {
