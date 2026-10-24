@@ -6,7 +6,15 @@ on:
       - master
     tags:
       - '*'
+    # Reine Doku-Aenderungen brauchen keinen Lauf. Fuer Tag-Pushes
+    # wertet GitHub paths-ignore nicht aus, Releases laufen also immer.
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   pull_request:
+    paths-ignore:
+      - 'docs/**'
+      - '**.md'
   schedule:
     - cron:  '0 4 * * 5' # Fridays at 4am
 
