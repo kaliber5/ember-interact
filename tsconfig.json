@@ -43,7 +43,8 @@
         "types/*"
       ]
     },
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "skipLibCheck": true
   },
   "include": [
     "app/**/*",
